@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
+import { AdMobBanner } from 'react-native-admob';
+
 
 import PlaceInput from "./src/components/PlaceInput/PlaceInput";
 import PlaceList from "./src/components/PlaceList/PlaceList";
@@ -13,6 +15,7 @@ import {
 } from "./src/store/actions/index";
 
 class App extends Component {
+
   placeAddedHandler = placeName => {
     this.props.onAddPlace(placeName);
   };
@@ -29,6 +32,10 @@ class App extends Component {
     this.props.onSelectPlace(key);
   };
 
+  bannerError = error => {
+    console.log('An Error Occured ' + error);
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -42,6 +49,13 @@ class App extends Component {
           places={this.props.places}
           onItemSelected={this.placeSelectedHandler}
         />
+      
+      <AdMobBanner
+          adSize="banner"
+          bannerSize="fullBanner"
+          adUnitID="ca-app-pub-9656928593874024/4295204902"
+          testDeviceID="EMULATOR"
+          didFailToReceiveAdWithError={this.bannerError} />
       </View>
     );
   }
